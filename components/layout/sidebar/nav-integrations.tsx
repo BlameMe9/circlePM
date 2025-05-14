@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { FileText, Users, List } from 'lucide-react';
+import { FileText, Zap, Plug } from 'lucide-react'; // Assuming Zap for Automations, Plug for Connections
 import {
    SidebarGroup,
    SidebarGroupLabel,
@@ -11,21 +11,20 @@ import {
    SidebarMenuButton,
 } from '@/components/ui/sidebar';
 
-const crmItems = [
-   { name: 'Overview', path: '/crm/overview', icon: List },
-   { name: 'Companies', path: '/crm/leads', icon: FileText }, // Note: 'Leads' path for 'Companies'
-   { name: 'Customers', path: '/crm/customers', icon: Users },
+const integrationItems = [
+   { name: 'Automations', path: '/crm/automations', icon: Zap },
+   { name: 'Connections', path: '/crm/connections', icon: Plug },
 ];
 
-export function NavCrm() {
+export function NavIntegrations() {
    const { orgId } = useParams();
    const base = `/${orgId}`;
 
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-         <SidebarGroupLabel>CRM</SidebarGroupLabel>
+         <SidebarGroupLabel>Integrations</SidebarGroupLabel>
          <SidebarMenu>
-            {crmItems.map((item) => (
+            {integrationItems.map((item) => (
                <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
                      <Link href={`${base}${item.path}`}>

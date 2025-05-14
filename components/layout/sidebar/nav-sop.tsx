@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { FileText, Users, List } from 'lucide-react';
+import { BookOpen } from 'lucide-react'; // Using BookOpen for SOP
 import {
    SidebarGroup,
    SidebarGroupLabel,
@@ -11,21 +11,20 @@ import {
    SidebarMenuButton,
 } from '@/components/ui/sidebar';
 
-const crmItems = [
-   { name: 'Overview', path: '/crm/overview', icon: List },
-   { name: 'Companies', path: '/crm/leads', icon: FileText }, // Note: 'Leads' path for 'Companies'
-   { name: 'Customers', path: '/crm/customers', icon: Users },
+const sopItems = [
+   { name: 'SOP', path: '/sop', icon: BookOpen }, // Path will be /orgId/sop
 ];
 
-export function NavCrm() {
+export function NavSop() {
    const { orgId } = useParams();
    const base = `/${orgId}`;
 
    return (
       <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-         <SidebarGroupLabel>CRM</SidebarGroupLabel>
+         {/* <SidebarGroupLabel>Knowledge</SidebarGroupLabel> */}
+         {/* Decided against a group label for a single item, but can be added if more items come here */}
          <SidebarMenu>
-            {crmItems.map((item) => (
+            {sopItems.map((item) => (
                <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
                      <Link href={`${base}${item.path}`}>

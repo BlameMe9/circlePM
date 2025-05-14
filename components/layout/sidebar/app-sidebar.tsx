@@ -5,13 +5,16 @@ import * as React from 'react';
 
 import { HelpButton } from '@/components/layout/sidebar/help-button';
 import { NavInbox } from '@/components/layout/sidebar/nav-inbox';
+import { NavTopGroup } from '@/components/layout/sidebar/nav-top-group';
 import { NavTeams } from '@/components/layout/sidebar/nav-teams';
-import { NavWorkspace } from '@/components/layout/sidebar/nav-workspace';
+
 import { NavAccount } from '@/components/layout/sidebar/nav-account';
 import { NavFeatures } from '@/components/layout/sidebar/nav-features';
 import { NavTeamsSettings } from '@/components/layout/sidebar/nav-teams-settings';
 import { NavCrm } from '@/components/layout/sidebar/nav-crm';
+import { NavIndividualTeams } from '@/components/layout/sidebar/nav-individual-teams'; // Re-import NavIndividualTeams
 import { NavInvoices } from '@/components/layout/sidebar/nav-invoices';
+import { NavIntegrations } from '@/components/layout/sidebar/nav-integrations';
 import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
 import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
@@ -37,10 +40,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ) : (
                <>
                   <NavInbox />
-                  <NavWorkspace />
+                  <NavTopGroup />
                   <NavCrm />
-                  <NavInvoices />
-                  <NavTeams />
+                  {/* Corrected Order: Projects -> Teams -> Invoices */}
+                  <NavTeams /> {/* Projects Section */}
+                  <NavIndividualTeams /> {/* Teams Section (LNDev Core, etc.) */}
+                  <NavInvoices /> {/* Invoices Section */}
+                  <NavIntegrations />
                </>
             )}
          </SidebarContent>
