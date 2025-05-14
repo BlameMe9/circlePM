@@ -10,6 +10,8 @@ import { NavWorkspace } from '@/components/layout/sidebar/nav-workspace';
 import { NavAccount } from '@/components/layout/sidebar/nav-account';
 import { NavFeatures } from '@/components/layout/sidebar/nav-features';
 import { NavTeamsSettings } from '@/components/layout/sidebar/nav-teams-settings';
+import { NavCrm } from '@/components/layout/sidebar/nav-crm';
+import { NavInvoices } from '@/components/layout/sidebar/nav-invoices';
 import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
 import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
@@ -36,6 +38,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                <>
                   <NavInbox />
                   <NavWorkspace />
+                  <NavCrm />
+                  <NavInvoices />
                   <NavTeams />
                </>
             )}

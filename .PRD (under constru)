@@ -1,0 +1,256 @@
+Product Requirements Document (PRD): SMB OS - Unified SMB Automation Hub
+Version: 1.1 Date: 2025-05-11 (Updated from 2025-05-03) Prepared For: AI Coding Assistant Status: Draft
+1. Introduction & Overview
+•	1.1. Project: SMB OS (Small to Medium-sized Business Operating System)
+•	1.2. Vision: To create a comprehensive, integrated, web-based "SMB Automation Hub" that centralizes data and automations, empowering Small to Medium-sized Businesses (SMBs) to streamline operations and improve efficiency.
+•	1.3. Core Problem Addressed: SMBs often struggle with automating tasks, made worse by fragmented data spread across multiple disconnected software tools. This leads to inefficiencies, manual data transfer, missed opportunities, and difficulty in implementing effective automations. SMB OS aims to be the central data and automation handler.
+•	1.4. Product Goal: To create a hub for SMBs to easily setup and manage automations that connect with all their data and syncs with all their other apps. 
+•	1.5. Purpose of this Document: To provide the AI Coding Assistant with detailed functional and non-functional requirements, user stories,
+3.2. Key User Personas: 
+•	Persona 1: Alex - The Business Owner/Manager 
+o	Needs: A holistic view of business data, simple automation to reduce manual tasks for the team, cost-effective solutions, ease of use with minimal training.
+o	Pain Points: Wasting time on repetitive tasks, data silos, lack of visibility into overall operations, expensive or overly complex software.
+o	Technical Proficiency: Moderate. Comfortable with web applications but not a programmer.
+Guiding Principles
+•	4.1. Integration First: Data and workflows must connect logically and seamlessly across all modules and with external systems.
+•	4.2. Simplicity & Usability: Prioritize an intuitive, uncluttered user experience. Minimize complexity and learning curve for core functionalities.
+•	4.3. Modularity & Extensibility: Design components as independent modules that interact via well-defined APIs, allowing for future expansion and easier maintenance.
+•	4.4. Scalability: Architect the system to accommodate growth in users, data volume, feature complexity, and automation load.
+•	4.5. Automation Focus: Embed automation capabilities as a core tenet of the platform, not an afterthought.
+•	4.6. Data-Driven: Enable users to easily leverage their centralized data to gain insights and drive automated actions.
+5. Functional Requirements: Core Modules
+•	5.1. Module 1: Dashboard Hub (Control Center)
+o	Objective: Provide a customizable, at-a-glance overview of key business metrics, active automations, critical alerts, and frequently accessed information.
+o	User Stories: 
+	As Alex, I want to customize my dashboard with widgets showing project status, new leads, and automation success rates, so I can quickly assess business health.
+	As Jamie, I want to see a list of recent automation runs and any errors directly on my dashboard, so I can address issues promptly.
+o	Key Features: 
+	Widget-based layout.
+	Drag-and-drop interface for widget arrangement and customization.
+	Library of pre-built widgets (e.g., key numbers from databases, automation status, task lists, notifications).
+	Ability for users to save multiple dashboard layouts.
+o	UI/UX: Clean, intuitive, responsive. Prioritize information hierarchy.
+•	5.2. Module 2: Unified Databases
+o	Objective: Provide a flexible and powerful system for storing, managing, and relating all company data, acting as the central data repository for automations. This module will leverage NocoDB as its foundation.
+o	User Stories: 
+	As Jamie, I want to create custom databases with specific fields relevant to our unique business processes, so I can accurately capture all necessary information.
+	As Alex, I want to easily view and filter data in tables, Kanban boards, or calendar views, so I can understand information in the most relevant context.
+	As Jamie, I want to link records between different databases (e.g., a client in CRM to a project in Projects), so I can maintain data integrity and see relationships.
+o	Key Features: 
+	Underlying Engine: Built on top of or deeply integrated with NocoDB, exposing its core functionalities (creating tables/projects, defining columns, views, roles, etc.) through the SMB OS UI.
+	Custom Database Creation: Users can define new databases (tables/sheets within NocoDB's project structure).
+	Field Types: Support for common field types (Text, Number, Date, Boolean, Select, Multi-select, Attachments, Formula, Links to other records/tables).
+	Configurable Views: 
+	Table View (spreadsheet-like) with sorting, filtering, grouping.
+	Kanban View (cards organized by a status field).
+	Calendar View (for date-based records).
+	(Future: Gallery View, Form View)
+	Relational Data: Ability to create relationships between tables (one-to-one, one-to-many, many-to-many).
+	Import/Export: Basic CSV import/export functionality.
+	Pre-built Templates (customizable by user): 
+	Projects Database: Fields: Project Name, Status (e.g., To Do, In Progress, Completed), Start Date, Due Date, Owner, Linked Tasks, Linked Client (from CRM).
+	CRM Database: (Consider "Contacts" and "Companies" as separate but related tables) 
+	Contacts: Name, Email, Phone, Company (link to Companies table), Role, Lead Source, Status.
+	Companies: Company Name, Industry, Website, Address, Linked Contacts.
+	(Norwegian terms "folk" (people/contacts), "selskap" (companies) noted – consider localization needs for field names or provide English defaults that are customizable).
+	Finance Database (Simplified): 
+	Transactions: Date, Description, Category (e.g., Sales, Expense, Subscription), Amount, Status (e.g., Pending, Paid, Void), Linked Client/Vendor.
+	Subscriptions: Service Name, Amount, Billing Cycle, Next Payment Date, Status (Active, Canceled).
+o	UI/UX: Clean interface utilizing Shadcn UI components, providing a consistent experience on top of NocoDB's capabilities. Focus on ease of data entry, viewing, and modification.
+•	5.3. Module 3: Automation Engine (Rule Builder)
+o	Objective: Enable users to create, manage, and monitor rule-based automations that connect data and actions across different modules within SMB OS and potentially with integrated external applications.
+o	User Stories: 
+	As Jamie, I want to create an automation so that when a new lead is added to the CRM with status "Hot", a new task is automatically created in the Projects database assigned to Alex.
+	As Alex, I want to receive an in-app notification when an automation rule fails, so I can investigate.
+o	Key Features: 
+	IFTTT-style Logic: "If [Trigger], Then [Action]" interface.
+	Triggers: 
+	New record created in a Database module (e.g., "New Contact in CRM").
+	Record updated in a Database module (e.g., "Project Status changed to 'Completed'").
+	Scheduled time (e.g., "Every Monday at 9 AM").
+	(Future: Webhook received, Email received).
+	Actions: 
+	Create a new record in a Database module.
+	Update an existing record in a Database module.
+	Send an in-app notification.
+	Send an email (requires email integration).
+	(Future: Call external API, Update external application data).
+	Conditions: Allow adding conditions to triggers (e.g., "If New Contact in CRM AND Lead Source is 'Website'").
+	Automation Overview: A view to list all created automations, their status (active/paused), last run time, success/failure logs.
+	Simple error logging for failed automations.
+o	UI/UX: Visual and intuitive rule builder. Minimize jargon.
+•	5.4. Module 4: Integration Hub
+o	Objective: Facilitate seamless, bi-directional data synchronization between SMB OS and essential third-party applications.
+o	User Stories: 
+	As Jamie, I want to connect our Google Calendar so that project deadlines from SMB OS create events in my calendar.
+	As Alex, I want new contacts from our website's form (via a webhook or a tool like Zapier/Make connecting to SMB OS) to automatically appear in the SMB OS CRM.
+o	Key Features: 
+	Connection Management: Interface to add, configure, and manage connections to external apps.
+	Authentication: Secure handling of API keys, OAuth2 tokens.
+	Data Mapping: User interface to map fields between SMB OS databases and external application objects.
+	Sync Logic: Configurable sync direction (two-way, one-way to SMB OS, one-way from SMB OS) and frequency (e.g., real-time if supported by API, scheduled polling).
+	Initial Target Integrations (MVP - specify 1-2 critical ones): 
+	Example: Google Workspace (Calendar, Sheets for import/export).
+	Example: Slack (for notifications).
+	(Future: Accounting software like Xero/QuickBooks Online, Email Marketing tools, other CRMs/PM tools for data migration/sync).
+o	UI/UX: Clear instructions for connecting apps. Visual feedback on sync status and errors.
+•	5.5. Module 5: AI Agent (Conversational Interface)
+o	Objective: Allow users to interact with the SMB OS, query data, and trigger actions using natural language commands through a chat interface.
+o	User Stories: 
+	As Alex, I want to type "Show me all projects due this week" into the AI chat and see a list of relevant projects.
+	As Jamie, I want to tell the AI "Create a new task for Project X with description 'Follow up with client' and due date tomorrow," and have the task created.
+	As Alex, I want to ask "What were our total sales last month?" and get the answer from the Finance database.
+o	Key Features: 
+	Interface: Chat window, consistently accessible (e.g., docked to the right side of the screen).
+	Natural Language Understanding (NLU): Ability to parse user intent and entities from text commands (and voice in future).
+	Action Execution: Translate understood commands into actions within SMB OS (e.g., fetching data, creating records, triggering automations) via internal APIs.
+	Contextual Awareness: Maintain conversation context to handle follow-up questions or clarifications.
+	Access to LLMs: Integration with specified Large Language Models (e.g., OpenAI GPT-series, Anthropic Claude) for NLU and response generation.
+	Data Access: Securely access and query data from the Unified Databases module.
+	Voice Input (Post-MVP): Capability to accept voice commands and provide spoken responses.
+o	UI/UX: Conversational, clear, and responsive chat interface. Provide feedback on actions taken.
+6. System-Wide Features & Requirements (Cross-Cutting Concerns)
+•	FEAT_SYS_01: Global Search 
+o	Description: A persistent search bar allowing users to search across all relevant modules (Databases, Projects, Contacts, etc.).
+o	Acceptance Criteria: Search results are relevant, quickly accessible, and link directly to the source item.
+•	FEAT_SYS_02: Notification Center 
+o	Description: Centralized area to display system and user-generated notifications (@mentions, task assignments, upcoming deadlines, approval requests, automation alerts, etc.).
+o	Acceptance Criteria: Users can mark notifications as read/unread. User preferences for notification delivery (in-app, email digests). Real-time updates for critical alerts.
+•	FEAT_SYS_03: User Roles & Permissions 
+o	Description: System to manage user access to modules and functionalities based on roles.
+o	Roles (Initial): 
+	Admin: Full access to all settings, modules, user management, billing.
+	Standard User: Can access and use modules based on permissions set by Admin (e.g., create/edit own data, run automations). Cannot change company-wide settings.
+	(Future: Viewer/Read-Only role, Custom Roles).
+o	Acceptance Criteria: Permissions are enforced consistently across the application. Admins can easily manage roles and invite/remove users.
+•	FEAT_SYS_04: Settings 
+o	Company Settings (Admin only): 
+	Company Profile: Name, Logo, Address, etc.
+	Subscription & Billing (Placeholder for future Stripe/payment gateway integration).
+	Module Configurations: Custom fields global definitions (if applicable), default automation settings.
+	User Management: Invite, deactivate, assign roles.
+	Integrations Management (links to Module 4).
+o	User Settings (Individual User): 
+	Profile: Name, Avatar, Email (read-only from login), Password change.
+	Notification Preferences: Control over in-app and email notifications.
+	Dashboard Layout Preferences.
+	API Keys (for personal use, if applicable in future).
+•	FEAT_SYS_05: Internal API 
+o	Description: Well-documented internal RESTful API (preferred for MVP, or GraphQL if strong reasons exist) for communication between frontend, backend, and modules.
+o	Acceptance Criteria: API is secure, versioned, and documented (e.g., using OpenAPI/Swagger). Enables all frontend functionalities and AI Agent interactions.
+•	FEAT_SYS_06: Audit Log 
+o	Description: A log of significant actions performed within the system (e.g., user logins, data creation/modification/deletion, automation rule changes, settings changes).
+o	Acceptance Criteria: Logs include timestamp, user responsible, action performed, and relevant entity. Accessible to Admins for review and troubleshooting.
+•	FEAT_SYS_07: (Future) External API 
+o	Description: Potential for offering a public API for external integrations by third-party developers or advanced users.
+7. Non-Functional Requirements
+•	NFR_01 (Performance): 
+o	Web application pages: Target load time < 3 seconds for 90th percentile.
+o	API responses: Target < 500ms for typical requests (95th percentile).
+o	System should support at least [e.g., 100-250] concurrent users for MVP without significant degradation.
+•	NFR_02 (Scalability): 
+o	Architecture must allow for independent scaling of compute resources (web servers, application workers) and database resources.
+o	Employ stateless application servers where possible.
+o	NocoDB's scalability characteristics should be considered if it's the primary data backend.
+•	NFR_03 (Usability): 
+o	UI must be intuitive, requiring minimal training for target SMB users.
+o	Consistent design language (based on Shadcn UI) and interaction patterns across all modules.
+o	Responsive design for major desktop browser resolutions (Chrome, Firefox, Safari, Edge latest versions).
+o	Basic mobile web access for viewing data is highly desirable for MVP; editing capabilities can be post-MVP.
+•	NFR_04 (Security): 
+o	HTTPS enforced for all traffic.
+o	Protection against OWASP Top 10 vulnerabilities (XSS, SQL Injection, CSRF, etc.).
+o	Secure password hashing (e.g., Argon2, bcrypt).
+o	Proper input validation on frontend and backend.
+o	Secure session management.
+o	Role-Based Access Control (RBAC) reliably enforced.
+o	Data encryption at rest and in transit for sensitive information.
+o	Regular security audits/scans (automated if possible).
+•	NFR_05 (Reliability/Availability): 
+o	Target uptime: >= 99.5% (excluding planned maintenance).
+o	Robust error handling, logging (application and system level), and monitoring/alerting for critical issues.
+o	Regular automated data backups with point-in-time recovery (PITR) capability for primary datastores.
+•	NFR_06 (Maintainability): 
+o	Code must be well-documented (comments, READMEs).
+o	Adherence to consistent coding standards (linters, formatters).
+o	Automated tests: Unit tests (target [e.g., >70%] coverage), Integration tests for critical workflows.
+o	Modular design to facilitate easier updates, bug fixes, and feature additions.
+•	NFR_07 (Accessibility - A11y): 
+o	Aim for WCAG 2.1 Level AA compliance where feasible.
+o	Key considerations: Keyboard navigation, screen reader compatibility, sufficient color contrast, ARIA attributes where appropriate.
+•	NFR_08 (Data Privacy): 
+o	Comply with relevant data privacy regulations (e.g., GDPR if handling EU citizen data, CCPA if applicable).
+o	Ensure user data is handled securely, with clear privacy policies.
+o	Mechanisms for data export and deletion upon user request.
+•	NFR_09 (Localization/Internationalization - L10n/I18n): 
+o	System should be architected to support localization in the future, even if MVP is English-only.
+o	Use of resource files for UI strings. Support for different date/time formats and number formats. (Noting Norwegian "folk, selskap" for CRM as an early indicator).
+8. Design & UI/UX Guidelines
+•	Aesthetic: Clean, modern, professional, and trustworthy.
+•	Information Hierarchy: Prioritize clarity. Guide the user's attention to the most important information and actions.
+•	Consistency: Uniform use of colors, typography (sans-serif fonts like Inter or similar), spacing, and interactive elements across all modules.
+•	Component Library: Utilize Shadcn UI (built with Tailwind CSS and Radix UI) for all UI components to ensure consistency and development speed.
+•	Navigation: Intuitive and predictable site navigation. Minimize clicks for common actions.
+•	Feedback: Provide clear visual feedback for user actions (e.g., loading states, success messages, error messages, validation feedback).
+•	Responsiveness: Ensure a good experience on standard desktop screen sizes. Prioritize graceful degradation on smaller viewports if full mobile optimization is out of scope for MVP.
+9. Technical Stack & Architecture
+•	9.1. Architecture: 
+o	Initial Approach: Modular Monolith. This provides a good balance of development speed and organized structure for MVP. Ensure strong internal API boundaries between modules to facilitate potential future migration to microservices if needed.
+o	Focus on clear separation of concerns between frontend, backend, and distinct service modules within the monolith.
+•	9.2. Frontend: 
+o	Framework: React (with Vite or Next.js - specify if one is preferred).
+o	UI Components: Shadcn UI.
+o	State Management: (e.g., Zustand, Jotai, Redux Toolkit - AI can choose or you can specify).
+o	Styling: Tailwind CSS (as per Shadcn UI).
+•	9.3. Backend: 
+o	Language/Runtime: Node.js.
+o	Framework: (e.g., Express.js, NestJS - specify if one is preferred. NestJS offers more structure which can be good for modular monoliths).
+o	API: RESTful API (document with OpenAPI v3).
+•	9.4. Database: 
+o	Primary Application Database (for users, settings, automation rules, etc.): PostgreSQL (Recommended for its robustness, scalability, and compatibility with NocoDB).
+o	Data Management Module Backend (Module 2): NocoDB. 
+	Clarification: SMB OS will embed or tightly integrate with NocoDB, using it as the engine for the "Unified Databases" module. Users will interact with a UI built with Shadcn components that, in turn, controls and configures NocoDB instances/projects. NocoDB itself will use PostgreSQL (or another supported SQL database like MySQL, configured for it) as its own backend to store the data managed by the users within Module 2.
+•	9.5. AI Agent: 
+o	LLM Integration: Specify target LLM provider(s) and models (e.g., OpenAI API with gpt-3.5-turbo or gpt-4, Anthropic Claude API).
+o	Orchestration: Backend service to handle NLU, context management, and interaction with internal SMB OS APIs.
+•	9.6. Deployment (Initial Thoughts - AI to determine best practices): 
+o	Containerization (Docker).
+o	Cloud Platform (e.g., AWS, Google Cloud, Azure - specify if preference or leave to AI's discretion).
+o	CI/CD pipeline (e.g., GitHub Actions, GitLab CI).
+10. Success Metrics & KPIs (Key Performance Indicators)
+•	User Engagement: 
+o	Daily Active Users (DAU) / Monthly Active Users (MAU).
+o	Average session duration.
+o	Feature adoption rate (e.g., % of users creating automations, % of users using AI agent).
+•	Task Completion & System Usage: 
+o	Number of automations created and run successfully.
+o	Number of databases/records created.
+o	Number of third-party integrations connected.
+•	User Satisfaction: 
+o	Net Promoter Score (NPS) (Post-launch surveys).
+o	Customer Support Ticket volume and resolution time.
+•	System Performance: 
+o	Adherence to NFR_01 (Performance targets).
+o	Uptime (NFR_05).
+11. Future Considerations (Post-MVP)
+•	Advanced analytics and reporting dashboards.
+•	More complex automation triggers and actions (e.g., multi-step automations, conditional logic branching).
+•	Expanded library of third-party integrations.
+•	Native mobile applications (iOS, Android).
+•	Marketplace for user-created database templates or automation recipes.
+•	Enhanced AI capabilities (e.g., proactive suggestions, data analysis).
+•	Team collaboration features (e.g., commenting, shared views with finer-grained permissions).
+•	Public API (FEAT_SYS_07).
+•	Advanced data import/export options.
+12. Out of Scope (for MVP)
+•	Full mobile application development (basic mobile web viewing is desirable).
+•	Advanced business intelligence (BI) and data visualization tools beyond basic views.
+•	Direct E-commerce platform integration (e.g., Shopify, WooCommerce) beyond generic data sync.
+•	HR-specific modules like payroll or detailed leave management (beyond simple tracking in a custom database).
+•	Multi-language support beyond English for UI (though architecture should allow for it).
+•	On-premise deployment.
+13. Assumptions
+•	The AI Coding Assistant can interpret these requirements to generate functional code.
+•	Users will have stable internet access.
+•	The selected LLMs for the AI Agent will be accessible via API and perform adequately.
+•	NocoDB can be successfully integrated as the backend for Module 2 as described.
