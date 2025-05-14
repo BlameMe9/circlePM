@@ -13,8 +13,11 @@ import {
 
 const crmItems = [
    { name: 'Overview', path: '/crm/overview', icon: List },
-   { name: 'Leads', path: '/crm/leads', icon: FileText },
+   { name: 'Activity Logs', path: '/crm/activity-logs', icon: FileText },
+   { name: 'Companies', path: '/crm/leads', icon: FileText },
    { name: 'Customers', path: '/crm/customers', icon: Users },
+   { name: 'Automations', path: '/crm/automations', icon: FileText },
+   { name: 'Connections', path: '/crm/connections', icon: FileText },
 ];
 
 export function NavCrm() {

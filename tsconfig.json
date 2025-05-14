@@ -1,5 +1,6 @@
 {
    "compilerOptions": {
+      "baseUrl": "./",
       "target": "ES2017",
       "lib": ["dom", "dom.iterable", "esnext"],
       "allowJs": true,
@@ -20,7 +21,10 @@
       ],
       "paths": {
          "@/*": ["./*"],
-         "@/crm-overview": ["external-shadcn-crm-dashboard/src/features/dashboard/pages/overview"]
+         "@/crm-overview": ["external-shadcn-crm-dashboard/src/features/dashboard/pages/overview"],
+         "@/crm-activity-logs": [
+            "external-shadcn-crm-dashboard/src/features/dashboard/pages/activity-logs"
+         ]
       }
    },
    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
