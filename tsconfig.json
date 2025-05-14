@@ -19,7 +19,8 @@
          }
       ],
       "paths": {
-         "@/*": ["./*"]
+         "@/*": ["./*"],
+         "@/crm-overview": ["external-shadcn-crm-dashboard/src/features/dashboard/pages/overview"]
       }
    },
    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
