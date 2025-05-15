@@ -152,3 +152,50 @@ input::-webkit-search-cancel-button {
 input[type='search'] {
    font-size: 16px !important;
 }
+
+/* Custom styles for fullscreen Tiptap editor */
+.fullscreen-editor-active {
+   display: flex;
+   flex-direction: column;
+   height: 100%; /* Ensure the .fullscreen-editor-active div itself takes full height of its parent DialogContent */
+}
+
+/* Ensure Tiptap's main toolbar is visible and at the top */
+.fullscreen-editor-active .tiptap-toolbar {
+   position: sticky !important;
+   top: 0 !important;
+   z-index: 20 !important; /* Higher z-index */
+   background-color: var(--background) !important; /* Use theme background */
+   opacity: 1 !important;
+   visibility: visible !important;
+   display: flex !important;
+   flex-shrink: 0; /* Prevent toolbar from shrinking */
+}
+
+/* Ensure Tiptap's content-wrapper takes full height minus toolbar */
+.fullscreen-editor-active .content-wrapper {
+   flex-grow: 1 !important; /* Make it take remaining space */
+   height: auto !important; /* Override fixed calc height if flex-grow is used */
+   width: 100% !important;
+   overflow-y: auto; /* Keep scroll on content-wrapper */
+}
+
+/* Ensure .simple-editor-content takes full available space within content-wrapper */
+.fullscreen-editor-active .simple-editor-content {
+   max-width: none !important;
+   margin: 0 !important;
+   width: 100% !important;
+   height: 100% !important; /* Fill the content-wrapper */
+   display: flex !important; /* Allow .ProseMirror to grow */
+   flex-direction: column !important;
+}
+
+/* Ensure .ProseMirror takes full available space within .simple-editor-content */
+.fullscreen-editor-active .simple-editor-content .tiptap.ProseMirror {
+   padding: 1.5rem !important;
+   flex-grow: 1 !important; /* Make it fill parent */
+   overflow-y: auto !important; /* Allow scrolling within ProseMirror itself */
+   width: 100% !important;
+   background-color: var(--card) !important; /* Use card background for visibility */
+   color: var(--foreground) !important; /* Ensure text is visible */
+}

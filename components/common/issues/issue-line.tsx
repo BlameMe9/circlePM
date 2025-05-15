@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Issue } from '@/mock-data/issues';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
 import { format } from 'date-fns';
 import { AssigneeUser } from './assignee-user';
@@ -14,6 +15,7 @@ import { motion } from 'motion/react';
 
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { IssueContextMenu } from './issue-context-menu';
+import { IssueDialogSidebar } from './issue-dialog-sidebar';
 
 export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?: boolean }) {
    const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -55,13 +57,29 @@ export function IssueLine({ issue, layoutId = false }: { issue: Issue; layoutId?
             <IssueContextMenu issueId={issue.id} />
          </ContextMenu>
          <Dialog open={isEditorOpen} onOpenChange={setIsEditorOpen}>
-            <DialogContent className="sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] h-[80vh] flex flex-col">
-               <DialogHeader>
-                  <DialogTitle>{issue.title}</DialogTitle>
-               </DialogHeader>
-               <div className="flex-grow overflow-auto p-1">
-                  <SimpleEditor />
+            <DialogContent
+               className={cn(
+                  'flex flex-row p-0', // Remove padding from DialogContent itself
+                  'h-[85vh] max-h-[85vh] w-[95vw] max-w-[1800px]'
+               )}
+            >
+               {/* Main Content Column (Editor + Header) */}
+               <div className="flex flex-grow flex-col overflow-hidden">
+                  <DialogHeader className="pl-6 pr-6 pt-4 pb-2 border-b shrink-0">
+                     {' '}
+                     {/* Header for the editor section */}
+                     <DialogTitle className="flex-grow truncate">{issue.title}</DialogTitle>
+                     {/* You can add other header controls here if needed, e.g., close button, fullscreen toggle */}
+                  </DialogHeader>
+                  <div className="flex-grow overflow-auto p-4 md:p-6">
+                     {' '}
+                     {/* Editor content area */}
+                     <SimpleEditor />
+                  </div>
                </div>
+
+               {/* Sidebar Column */}
+               <IssueDialogSidebar issue={issue} />
             </DialogContent>
          </Dialog>
       </>
