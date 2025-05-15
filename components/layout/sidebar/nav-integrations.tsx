@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { FileText, Zap, Plug } from 'lucide-react'; // Assuming Zap for Automations, Plug for Connections
+import { Zap, Plug } from 'lucide-react'; // Assuming Zap for Automations, Plug for Connections
 import {
    SidebarGroup,
    SidebarGroupLabel,

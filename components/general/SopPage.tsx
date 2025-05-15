@@ -9,7 +9,7 @@ export function SopPage() {
             <Card>
                <CardHeader>
                   <CardTitle>Standard Operating Procedures (SOP)</CardTitle>
-                  <CardDescription>Access and manage your team's SOPs.</CardDescription>
+                  <CardDescription>Access and manage your team&apos;s SOPs.</CardDescription>
                </CardHeader>
                <CardContent>
                   <p className="text-muted-foreground">

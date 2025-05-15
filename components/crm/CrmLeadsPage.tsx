@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React from 'react';
+import { Lead } from '../../external-shadcn-crm-dashboard/src/features/dashboard/pages/leads/types/lead';
 
 // Simplified LeadsFilters placeholder
 const LeadsFiltersPlaceholder = () => {
@@ -65,8 +66,8 @@ const LeadsTablePlaceholder = ({ leadsCount }: { leadsCount: number }) => {
 
 export function CrmLeadsPage() {
    // Mocked data and handlers for structure, initially showing empty state
-   const leads: any[] = [];
-   const allLeads: any[] = [];
+   const leads: Lead[] = [];
+   const allLeads: Lead[] = [];
    // const pageCount = 0;
    // const filters = {};
    // const sorting = {};

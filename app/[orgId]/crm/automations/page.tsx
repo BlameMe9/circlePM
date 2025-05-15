@@ -6,7 +6,8 @@ export const metadata = {
    title: 'Automations | CRM',
 };
 
-export default function AutomationsPage({ params }: { params: { orgId: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function AutomationsPage(props: { params: { orgId: string } }) {
    return (
       <MainLayout header={<Header />}>
          <CrmAutomationsPage />

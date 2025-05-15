@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client';
 
 import React, { useState } from 'react';
@@ -25,7 +24,7 @@ const totalSteps = 5; // Based on the screenshots
 export function WelcomeSequence({ onComplete }: WelcomeSequenceProps) {
    const [currentStep, setCurrentStep] = useState(1);
    const [selectedTheme, setSelectedTheme] = useState<'light' | 'dark' | null>(null);
-   const [inviteLink, setInviteLink] = useState('https://app.circlepm.com/invite/XYZ123ABC'); // Placeholder
+   const [inviteLink] = useState('https://app.circlepm.com/invite/XYZ123ABC'); // Placeholder
 
    const handleGoToStep = (step: number) => {
       if (step >= 1 && step <= totalSteps) {
@@ -141,11 +140,9 @@ export function WelcomeSequence({ onComplete }: WelcomeSequenceProps) {
                </Card>
             );
          case 4:
-            // eslint-disable-next-line no-unused-vars
             const handleCopyLink = () => {
                navigator.clipboard.writeText(inviteLink);
                // Add toast notification for feedback if desired
-               // eslint-disable-next-line no-console
                console.log('Link copied:', inviteLink);
             };
             return (
@@ -195,10 +192,10 @@ export function WelcomeSequence({ onComplete }: WelcomeSequenceProps) {
             return (
                <Card className="w-full text-center">
                   <CardHeader className="px-4 pt-8 pb-4">
-                     <CardTitle className="text-2xl font-bold">You're good to go</CardTitle>
+                     <CardTitle className="text-2xl font-bold">You&apos;re good to go</CardTitle>
                      <CardDescription className="text-sm max-w-sm mx-auto pt-1">
-                        Go ahead and explore the app. When you're ready, create your first item by
-                        pressing{' '}
+                        Go ahead and explore the app. When you&apos;re ready, create your first item
+                        by pressing{' '}
                         <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                            C
                         </kbd>

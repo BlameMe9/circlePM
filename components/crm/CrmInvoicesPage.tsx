@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React from 'react';
+import { Invoice } from '../../external-shadcn-crm-dashboard/src/features/dashboard/pages/invoices/types/invoice';
 
 // Simplified InvoicesFilters placeholder
 const InvoicesFiltersPlaceholder = () => {
@@ -65,8 +66,8 @@ const InvoicesTablePlaceholder = ({ invoicesCount }: { invoicesCount: number }) 
 
 export function CrmInvoicesPage() {
    // Mocked data and handlers for structure, initially showing empty state
-   const invoices: any[] = [];
-   const allInvoices: any[] = [];
+   const invoices: Invoice[] = [];
+   const allInvoices: Invoice[] = [];
 
    const isEmpty = allInvoices.length === 0;
    const currentInvoicesCount = invoices.length;

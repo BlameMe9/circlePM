@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React from 'react';
+import { Customer } from '../../external-shadcn-crm-dashboard/src/features/dashboard/pages/customers/types/customer';
 
 // Simplified CustomersFilters placeholder
 const CustomersFiltersPlaceholder = () => {
@@ -63,8 +64,8 @@ const CustomersTablePlaceholder = ({ customersCount }: { customersCount: number 
 
 export function CrmCustomersPage() {
    // Mocked data and handlers for structure, initially showing empty state
-   const customers: any[] = [];
-   const allCustomers: any[] = [];
+   const customers: Customer[] = [];
+   const allCustomers: Customer[] = [];
 
    const isEmpty = allCustomers.length === 0;
    const currentCustomersCount = customers.length;

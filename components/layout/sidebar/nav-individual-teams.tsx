@@ -6,7 +6,6 @@ import {
    Box,
    ChevronRight,
    CopyMinus,
-   Layers,
    Link as LinkIcon,
    MoreHorizontal,
    Settings,
@@ -46,7 +45,7 @@ export function NavIndividualTeams() {
       <SidebarGroup>
          <SidebarGroupLabel>Teams</SidebarGroupLabel>
          <SidebarMenu>
-            {joinedTeams.map((item, index) => (
+            {joinedTeams.map((item) => (
                <Collapsible
                   key={item.name}
                   asChild

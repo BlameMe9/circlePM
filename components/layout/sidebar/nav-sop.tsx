@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation';
 import { BookOpen } from 'lucide-react'; // Using BookOpen for SOP
 import {
    SidebarGroup,
-   SidebarGroupLabel,
    SidebarMenu,
    SidebarMenuItem,
    SidebarMenuButton,

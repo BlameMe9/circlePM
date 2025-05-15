@@ -6,7 +6,8 @@ export const metadata = {
    title: 'Activity Logs | CRM',
 };
 
-export default function ActivityLogsPage({ params }: { params: { orgId: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ActivityLogsPage(props: { params: { orgId: string } }) {
    return (
       <MainLayout header={<Header />}>
          <CrmActivityLogsPage />

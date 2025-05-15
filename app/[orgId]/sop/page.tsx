@@ -6,7 +6,8 @@ export const metadata = {
    title: 'SOP | Knowledge Base',
 };
 
-export default function OrgSopPage({ params }: { params: { orgId: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function OrgSopPage(props: { params: { orgId: string } }) {
    return (
       <MainLayout header={<Header />}>
          <SopPage />

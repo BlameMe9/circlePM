@@ -10,7 +10,6 @@ export default function WelcomePage() {
    const handleWelcomeComplete = () => {
       // Logic to handle completion of the welcome sequence
       // For example, redirect to the main dashboard or update user state
-      // eslint-disable-next-line no-console
       console.log('Welcome sequence completed!');
       // router.push('/dashboard'); // Example redirect
    };

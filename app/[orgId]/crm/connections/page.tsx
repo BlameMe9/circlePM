@@ -6,7 +6,8 @@ export const metadata = {
    title: 'Connections | CRM',
 };
 
-export default function ConnectionsPage({ params }: { params: { orgId: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ConnectionsPage(props: { params: { orgId: string } }) {
    return (
       <MainLayout header={<Header />}>
          <CrmConnectionsPage />
