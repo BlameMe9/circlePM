@@ -16,18 +16,7 @@ import {
    UserRound,
 } from 'lucide-react';
 
-export const inboxItems = [
-   {
-      name: 'Inbox',
-      url: '#',
-      icon: Inbox,
-   },
-   {
-      name: 'My issues',
-      url: '#',
-      icon: FolderKanban,
-   },
-];
+export const inboxItems = [];
 
 export const workspaceItems = [
    {
@@ -44,6 +33,11 @@ export const workspaceItems = [
       name: 'Members',
       url: '/lndev-ui/members',
       icon: UserRound,
+   },
+   {
+      name: 'My tasks',
+      url: '/dashboard/my-tasks',
+      icon: FileText,
    },
 ];
 

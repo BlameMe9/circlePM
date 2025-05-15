@@ -8,12 +8,17 @@ import { UserRound, FileText } from 'lucide-react'; // Removed ContactRound as '
 const topGroupItems = [
    {
       name: 'Members',
-      url: '/lndev-ui/members', // Assuming this is the correct path from workspaceItems
+      url: '/lndev-ui/members',
       icon: UserRound,
    },
    {
+      name: 'My tasks',
+      url: '/dashboard/my-tasks',
+      icon: FileText,
+   },
+   {
       name: 'Activity Logs',
-      url: '/crm/activity-logs', // Path from crmItems
+      url: '/crm/activity-logs',
       icon: FileText,
    },
 ];

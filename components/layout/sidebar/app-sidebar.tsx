@@ -19,7 +19,7 @@ import { OrgSwitcher } from '@/components/layout/sidebar/org-switcher';
 import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { X } from 'lucide-react';
+import { X, PlayCircleIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { BackToApp } from '@/components/layout/sidebar/back-to-app';
 
@@ -41,6 +41,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                <>
                   <NavInbox />
                   <NavTopGroup />
+                  <Button variant="ghost" className="w-full justify-start h-8 px-2 text-sm" asChild>
+                     <Link href="/welcome">
+                        <PlayCircleIcon className="mr-2 h-4 w-4" />
+                        Welcome flow
+                     </Link>
+                  </Button>
                   <NavCrm />
                   {/* Corrected Order: Projects -> Teams -> Invoices */}
                   <NavTeams /> {/* Projects Section */}
