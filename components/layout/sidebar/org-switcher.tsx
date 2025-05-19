@@ -21,8 +21,27 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui
 import { CreateNewIssue } from './create-new-issue';
 import { ThemeToggle } from '../theme-toggle';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { supabase } from '../../../lib/supabaseClient';
 
 export function OrgSwitcher() {
+   const router = useRouter();
+
+   async function handleLogout() {
+      try {
+         const { error } = await supabase.auth.signOut();
+         if (error) {
+            console.error('Error logging out:', error.message);
+            // Optionally, show a notification to the user
+         } else {
+            router.push('/login');
+         }
+      } catch (error) {
+         console.error('Unexpected error during logout:', error);
+         // Optionally, show a notification to the user
+      }
+   }
+
    return (
       <SidebarMenu>
          <SidebarMenuItem>
@@ -85,7 +104,7 @@ export function OrgSwitcher() {
                         </DropdownMenuSubContent>
                      </DropdownMenuPortal>
                   </DropdownMenuSub>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onSelect={handleLogout}>
                      Log out
                      <DropdownMenuShortcut>⌥⇧Q</DropdownMenuShortcut>
                   </DropdownMenuItem>
