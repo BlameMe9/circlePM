@@ -30,10 +30,10 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    return (
       <div
          className={cn(
-            'bg-conainer',
+            'bg-container', // Corrected typo
             isViewTypeGrid
-               ? 'overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col'
-               : ''
+               ? 'overflow-hidden rounded-md h-full flex-shrink-0 w-[348px] flex flex-col mt-4'
+               : 'mt-6' // Added margin-top for list view
          )}
       >
          <div

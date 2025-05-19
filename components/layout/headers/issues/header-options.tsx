@@ -9,11 +9,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { useViewStore, ViewType } from '@/store/view-store';
-import { LayoutGrid, LayoutList, SlidersHorizontal } from 'lucide-react';
+import { useCreateIssueStore } from '@/store/create-issue-store';
+import { LayoutGrid, LayoutList } from 'lucide-react'; // Removed SlidersHorizontal
 import { Filter } from './filter';
 
 export default function HeaderOptions() {
    const { viewType, setViewType } = useViewStore();
+   const { openModal } = useCreateIssueStore();
 
    const handleViewChange = (type: ViewType) => {
       setViewType(type);
@@ -22,39 +24,23 @@ export default function HeaderOptions() {
    return (
       <div className="w-full flex justify-between items-center border-b py-1.5 px-6 h-10">
          <Filter />
-         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-               <Button className="relative" size="xs" variant="secondary">
-                  <SlidersHorizontal className="size-4 mr-1" />
-                  Display
-                  {viewType === 'grid' && (
-                     <span className="absolute right-0 top-0 w-2 h-2 bg-orange-500 rounded-full" />
-                  )}
-               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-72 flex p-3 gap-2" align="end">
-               <DropdownMenuItem
-                  onClick={() => handleViewChange('list')}
-                  className={cn(
-                     'w-full text-xs border border-accent flex flex-col gap-1',
-                     viewType === 'list' ? 'bg-accent' : ''
-                  )}
-               >
-                  <LayoutList className="size-4" />
-                  List
-               </DropdownMenuItem>
-               <DropdownMenuItem
-                  onClick={() => handleViewChange('grid')}
-                  className={cn(
-                     'w-full text-xs border border-accent flex flex-col gap-1',
-                     viewType === 'grid' ? 'bg-accent' : ''
-                  )}
-               >
-                  <LayoutGrid className="size-4" />
-                  Board
-               </DropdownMenuItem>
-            </DropdownMenuContent>
-         </DropdownMenu>
+         <div className="flex items-center gap-2">
+            <Button size="xs" variant="default" onClick={() => openModal()}>
+               New Task
+            </Button>
+            <Button
+               size="xs"
+               variant="secondary"
+               onClick={() => setViewType(viewType === 'grid' ? 'list' : 'grid')}
+            >
+               {viewType === 'grid' ? (
+                  <LayoutList className="size-4 mr-1" />
+               ) : (
+                  <LayoutGrid className="size-4 mr-1" />
+               )}
+               {viewType === 'grid' ? 'List View' : 'Board View'}
+            </Button>
+         </div>
       </div>
    );
 }

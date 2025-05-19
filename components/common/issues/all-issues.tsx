@@ -69,7 +69,7 @@ const FilteredIssuesView: FC<{
    return (
       <DndProvider backend={HTML5Backend}>
          <CustomDragLayer />
-         <div className={cn(isViewTypeGrid && 'flex h-full gap-3 px-2 py-2 min-w-max')}>
+         <div className={cn(isViewTypeGrid && 'flex h-full gap-6 px-2 py-2 min-w-max')}>
             {status.map((statusItem) => (
                <GroupIssues
                   key={statusItem.id}
@@ -90,7 +90,7 @@ const GroupIssuesListView: FC<{
    return (
       <DndProvider backend={HTML5Backend}>
          <CustomDragLayer />
-         <div className={cn(isViewTypeGrid && 'flex h-full gap-3 px-2 py-2 min-w-max')}>
+         <div className={cn(isViewTypeGrid && 'flex h-full gap-6 px-2 py-2 min-w-max')}>
             {status.map((statusItem) => (
                <GroupIssues
                   key={statusItem.id}
