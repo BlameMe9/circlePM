@@ -6,9 +6,10 @@ import { useIssuesStore } from '@/store/issues-store';
 import { useViewStore } from '@/store/view-store';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import { FC, useRef } from 'react';
+import { FC, useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { useDrop } from 'react-dnd';
-import { Button } from '../../ui/button';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { IssueDragType, IssueGrid } from './issue-grid';
 import { IssueLine } from './issue-line';
 import { useCreateIssueStore } from '@/store/create-issue-store';
@@ -23,8 +24,56 @@ interface GroupIssuesProps {
 
 export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
    const { viewType } = useViewStore();
-   const isViewTypeGrid = viewType === 'grid';
    const { openModal } = useCreateIssueStore();
+   const { updateStatusName } = useIssuesStore();
+   const isViewTypeGrid = viewType === 'grid';
+
+   const [isEditing, setIsEditing] = useState(false);
+   const [currentName, setCurrentName] = useState(status.name);
+   const inputRef = useRef<HTMLInputElement>(null);
+
+   useEffect(() => {
+      if (isEditing && inputRef.current) {
+         inputRef.current.focus();
+         inputRef.current.select();
+      }
+   }, [isEditing]);
+
+   useEffect(() => {
+      if (!isEditing) {
+         setCurrentName(status.name);
+      }
+   }, [status.name, isEditing]);
+
+   const handleNameClick = () => {
+      setIsEditing(true);
+   };
+
+   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentName(event.target.value);
+   };
+
+   const saveName = () => {
+      const trimmedName = currentName.trim();
+      if (trimmedName && trimmedName !== status.name) {
+         updateStatusName(status.id, trimmedName);
+      }
+      setIsEditing(false);
+   };
+
+   const handleNameBlur = () => {
+      saveName();
+   };
+
+   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+         saveName();
+      }
+      if (event.key === 'Escape') {
+         setCurrentName(status.name); // Reset to original name
+         setIsEditing(false);
+      }
+   };
    const sortedIssues = sortIssuesByPriority(issues);
 
    return (
@@ -53,7 +102,22 @@ export function GroupIssues({ status, issues, count }: GroupIssuesProps) {
             >
                <div className="flex items-center gap-2">
                   <status.icon />
-                  <span className="text-sm font-medium">{status.name}</span>
+                  {isEditing ? (
+                     <Input
+                        ref={inputRef}
+                        type="text"
+                        value={currentName}
+                        onChange={handleNameChange}
+                        onBlur={handleNameBlur}
+                        onKeyDown={handleKeyDown}
+                        className="h-7 px-1 text-sm font-medium bg-transparent border-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 min-w-0 flex-grow w-auto"
+                        style={{ flexBasis: 'auto' }} // Allow shrinking and growing
+                     />
+                  ) : (
+                     <span className="text-sm font-medium cursor-text" onClick={handleNameClick}>
+                        {status.name}
+                     </span>
+                  )}
                   <span className="text-sm text-muted-foreground">{count}</span>
                </div>
 

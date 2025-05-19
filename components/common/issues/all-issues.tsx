@@ -1,6 +1,6 @@
 'use client';
 
-import { status } from '@/mock-data/status';
+// import { status } from '@/mock-data/status'; // Will now come from useIssuesStore
 import { useIssuesStore } from '@/store/issues-store';
 import { useSearchStore } from '@/store/search-store';
 import { useViewStore } from '@/store/view-store';
@@ -14,10 +14,13 @@ import { CustomDragLayer } from './issue-grid';
 import { cn } from '@/lib/utils';
 import { Issue } from '@/mock-data/issues';
 
+import { Status } from '@/mock-data/status'; // Import Status type
+
 export default function AllIssues() {
    const { isSearchOpen, searchQuery } = useSearchStore();
    const { viewType } = useViewStore();
    const { hasActiveFilters } = useFilterStore();
+   const { statuses } = useIssuesStore(); // Get statuses from the store
 
    const isSearching = isSearchOpen && searchQuery.trim() !== '';
    const isViewTypeGrid = viewType === 'grid';
@@ -28,9 +31,9 @@ export default function AllIssues() {
          {isSearching ? (
             <SearchIssuesView />
          ) : isFiltering ? (
-            <FilteredIssuesView isViewTypeGrid={isViewTypeGrid} />
+            <FilteredIssuesView statuses={statuses} isViewTypeGrid={isViewTypeGrid} />
          ) : (
-            <GroupIssuesListView isViewTypeGrid={isViewTypeGrid} />
+            <GroupIssuesListView statuses={statuses} isViewTypeGrid={isViewTypeGrid} />
          )}
       </div>
    );
@@ -43,8 +46,9 @@ const SearchIssuesView = () => (
 );
 
 const FilteredIssuesView: FC<{
+   statuses: Status[];
    isViewTypeGrid: boolean;
-}> = ({ isViewTypeGrid = false }) => {
+}> = ({ statuses, isViewTypeGrid = false }) => {
    const { filters } = useFilterStore();
    const { filterIssues } = useIssuesStore();
 
@@ -57,20 +61,21 @@ const FilteredIssuesView: FC<{
    const filteredIssuesByStatus = useMemo(() => {
       const result: Record<string, Issue[]> = {};
 
-      status.forEach((statusItem) => {
+      statuses.forEach((statusItem) => {
+         // Use statuses from props
          result[statusItem.id] = filteredIssues.filter(
             (issue) => issue.status.id === statusItem.id
          );
       });
 
       return result;
-   }, [filteredIssues]);
+   }, [filteredIssues, statuses]); // Add statuses to dependency array
 
    return (
       <DndProvider backend={HTML5Backend}>
          <CustomDragLayer />
          <div className={cn(isViewTypeGrid && 'flex h-full gap-6 px-2 py-2 min-w-max')}>
-            {status.map((statusItem) => (
+            {statuses.map((statusItem: Status) => (
                <GroupIssues
                   key={statusItem.id}
                   status={statusItem}
@@ -84,14 +89,15 @@ const FilteredIssuesView: FC<{
 };
 
 const GroupIssuesListView: FC<{
+   statuses: Status[];
    isViewTypeGrid: boolean;
-}> = ({ isViewTypeGrid = false }) => {
+}> = ({ statuses, isViewTypeGrid = false }) => {
    const { issuesByStatus } = useIssuesStore();
    return (
       <DndProvider backend={HTML5Backend}>
          <CustomDragLayer />
          <div className={cn(isViewTypeGrid && 'flex h-full gap-6 px-2 py-2 min-w-max')}>
-            {status.map((statusItem) => (
+            {statuses.map((statusItem: Status) => (
                <GroupIssues
                   key={statusItem.id}
                   status={statusItem}

@@ -2,7 +2,7 @@ import { groupIssuesByStatus, Issue, issues as mockIssues } from '@/mock-data/is
 import { LabelInterface } from '@/mock-data/labels';
 import { Priority } from '@/mock-data/priorities';
 import { Project } from '@/mock-data/projects';
-import { Status } from '@/mock-data/status';
+import { Status, status as initialStatuses } from '@/mock-data/status';
 import { User } from '@/mock-data/users';
 import { create } from 'zustand';
 
@@ -18,6 +18,7 @@ interface IssuesState {
    // Data
    issues: Issue[];
    issuesByStatus: Record<string, Issue[]>;
+   statuses: Status[];
 
    //
    getAllIssues: () => Issue[];
@@ -54,12 +55,14 @@ interface IssuesState {
 
    // Utility functions
    getIssueById: (id: string) => Issue | undefined;
+   updateStatusName: (statusId: string, newName: string) => void;
 }
 
 export const useIssuesStore = create<IssuesState>((set, get) => ({
    // Initial state
    issues: mockIssues.sort((a, b) => b.rank.localeCompare(a.rank)),
    issuesByStatus: groupIssuesByStatus(mockIssues),
+   statuses: initialStatuses,
 
    //
    getAllIssues: () => get().issues,
@@ -219,5 +222,13 @@ export const useIssuesStore = create<IssuesState>((set, get) => ({
    // Utility functions
    getIssueById: (id: string) => {
       return get().issues.find((issue) => issue.id === id);
+   },
+
+   updateStatusName: (statusId: string, newName: string) => {
+      set((state) => ({
+         statuses: state.statuses.map((status) =>
+            status.id === statusId ? { ...status, name: newName } : status
+         ),
+      }));
    },
 }));
